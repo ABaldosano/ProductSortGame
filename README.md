@@ -9,7 +9,7 @@ A falling-item sorting game. Products drop from the top — drag each one into t
 
 ## 🎮 Play Now
 
-**[▶ Launch Game](https://abaldosado.github.io/product-sort-game/)**
+**[▶ Launch Game](https://abaldosano.github.io/ProductSortGame/)**
 
 ---
 
