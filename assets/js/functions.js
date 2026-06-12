@@ -264,7 +264,7 @@ function spawnProduct() {
   const y  = -PRODUCT_SIZE;
 
   const img       = document.createElement('img');
-  img.src         = `/../images/${p.name}.png`;
+  img.src         = `../images/${p.name}.png`;
   img.alt         = p.name;
   img.className   = 'product';
   img.draggable   = false;
