@@ -9,7 +9,7 @@ A falling-item sorting game. Products drop from the top — drag each one into t
 
 ## 🎮 Play Now
 
-**[▶ Launch Game](https://abaldosano.github.io/ProductSortGame/)**
+**[▶ Launch Game](https://abaldosado.github.io/product-sort-game/)**
 
 ---
 
@@ -29,31 +29,37 @@ A falling-item sorting game. Products drop from the top — drag each one into t
 
 ```
 product-sort-game/
-├── index.html        ← entire game (HTML + CSS + JS, single file)
-├── images/
-│   ├── basket.png
-│   ├── Apple.png
-│   ├── Banana.png
-│   ├── Broccoli.png
-│   ├── Butter.png
-│   ├── Carrot.png
-│   ├── Cheese.png
-│   ├── Cream.png
-│   ├── Cucumber.png
-│   ├── Grape.png
-│   ├── Mango.png
-│   ├── Milk.png
-│   ├── Orange.png
-│   ├── Potato.png
-│   ├── Tomato.png
-│   └── Yogurt.png
-└── sounds/
-    ├── Bgmusic.wav
-    ├── Click.wav
-    ├── Correct.wav
-    ├── Wrong.wav
-    ├── Levelup.wav
-    └── Gameover.wav
+├── index.html
+├── README.md
+└── assets/
+    ├── css/
+    │   └── global.css
+    ├── images/
+    │   ├── basket.png
+    │   ├── Apple.png
+    │   ├── Banana.png
+    │   ├── Broccoli.png
+    │   ├── Butter.png
+    │   ├── Carrot.png
+    │   ├── Cheese.png
+    │   ├── Cream.png
+    │   ├── Cucumber.png
+    │   ├── Grape.png
+    │   ├── Mango.png
+    │   ├── Milk.png
+    │   ├── Orange.png
+    │   ├── Potato.png
+    │   ├── Tomato.png
+    │   └── Yogurt.png
+    ├── js/
+    │   └── functions.js
+    └── sounds/
+        ├── Bgmusic.wav
+        ├── Click.wav
+        ├── Correct.wav
+        ├── Gameover.wav
+        ├── Levelup.wav
+        └── Wrong.wav
 ```
 
 ---
@@ -93,4 +99,3 @@ Requires **Visual Studio 2022** and **.NET Framework 4.8** to build and run.
 - `requestAnimationFrame` game loop with delta-time for smooth 60fps falling
 - Mouse + Touch drag-and-drop with CSS transform scale for responsive layout
 - `localStorage` for persistent high score
-- Single `index.html` — fully self-contained
