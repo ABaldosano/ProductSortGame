@@ -1,0 +1,312 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(ellipse at top, #0f1b30 0%, #060e1a 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      overflow-x: hidden;
+      touch-action: none;
+    }
+
+    /* ── Wrapper (scaled by JS on small screens) ── */
+    #game-wrapper {
+      width: 450px;
+      flex-shrink: 0;
+      transform-origin: top center;
+    }
+
+    /* ── Main container ── */
+    #game-container {
+      width: 450px;
+      height: 640px;
+      position: relative;
+      background: linear-gradient(175deg, #b8e8fd 0%, #cdf5e8 55%, #a2dcb0 100%);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow:
+        0 32px 80px rgba(0,0,0,0.55),
+        0 0 0 1.5px rgba(255,255,255,0.12),
+        inset 0 1px 0 rgba(255,255,255,0.35);
+      margin: 20px auto;
+    }
+
+    /* ── HUD ── */
+    #hud {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 56px;
+      background: rgba(255,255,255,0.82);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.5);
+      display: none; /* shown only during game */
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 14px;
+      z-index: 5;
+    }
+
+    #hud.visible { display: flex; }
+
+    #hearts-display {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .heart-icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    #score-display {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1a237e;
+      letter-spacing: 0.3px;
+    }
+
+    #btn-pause {
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 10px;
+      background: rgba(90, 90, 200, 0.12);
+      color: #3c3c8c;
+      font-size: 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      touch-action: manipulation;
+      transition: background 0.15s;
+    }
+    #btn-pause:active { background: rgba(90,90,200,0.25); }
+
+    /* ── Game area (field) ── */
+    #game-area {
+      position: absolute;
+      top: 56px; left: 0; right: 0; bottom: 0;
+      overflow: hidden;
+    }
+
+    /* ── Basket area ── */
+    #basket-area {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 120px;
+      background: linear-gradient(180deg, transparent 0%, rgba(120, 75, 30, 0.10) 100%);
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-end;
+      padding: 0 12px 10px;
+    }
+
+    .basket-zone {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      width: 120px;
+      cursor: default;
+    }
+
+    .basket-zone img {
+      width: 84px;
+      height: 64px;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 8px rgba(80,40,0,0.25));
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .basket-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #4a3020;
+      background: rgba(255,255,255,0.72);
+      padding: 2px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    /* ── Products ── */
+    .product {
+      position: absolute;
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      cursor: grab;
+      touch-action: none;
+      user-select: none;
+      -webkit-user-drag: none;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.22));
+      transition: filter 0.12s;
+      will-change: transform, top, left;
+    }
+
+    .product.is-dragging {
+      cursor: grabbing;
+      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.38));
+      z-index: 99 !important;
+    }
+
+    /* ── OVERLAY SCREENS ── */
+    .overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      z-index: 20;
+    }
+
+    /* Menu */
+    #screen-menu {
+      background: linear-gradient(175deg, #b8e8fd 0%, #cdf5e8 55%, #a2dcb0 100%);
+    }
+
+    .menu-logo {
+      font-size: 48px;
+      line-height: 1;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+    }
+
+    .menu-title {
+      font-size: 26px;
+      font-weight: 800;
+      color: #1a237e;
+      text-align: center;
+      line-height: 1.2;
+      text-shadow: 0 2px 4px rgba(255,255,255,0.6);
+    }
+
+    .menu-sub {
+      font-size: 12px;
+      font-weight: 600;
+      color: #546060;
+      text-align: center;
+      padding: 0 40px;
+      line-height: 1.6;
+    }
+
+    #menu-highscore {
+      font-size: 13px;
+      font-weight: 700;
+      color: #b5442a;
+      background: rgba(255,255,255,0.65);
+      padding: 5px 18px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.8);
+    }
+
+    .spacer-sm { height: 6px; }
+
+    .action-btn {
+      width: 200px;
+      padding: 14px 0;
+      border: none;
+      border-radius: 14px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      touch-action: manipulation;
+      transition: transform 0.1s, box-shadow 0.1s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+    .action-btn:active { transform: scale(0.96); }
+
+    .btn-green {
+      background: linear-gradient(135deg, #43a047, #2e7d32);
+      color: #fff;
+      box-shadow: 0 5px 16px rgba(67,160,71,0.38);
+    }
+
+    .btn-blue {
+      background: linear-gradient(135deg, #1e88e5, #1565c0);
+      color: #fff;
+      box-shadow: 0 5px 16px rgba(30,136,229,0.35);
+    }
+
+    .btn-outline {
+      background: rgba(255,255,255,0.55);
+      color: #1a237e;
+      border: 1.5px solid rgba(100,100,200,0.3);
+      font-size: 13px;
+    }
+
+    /* Pause / Gameover overlays */
+    #screen-pause,
+    #screen-gameover {
+      background: rgba(8, 18, 40, 0.80);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    #screen-pause.hidden,
+    #screen-gameover.hidden,
+    #screen-menu.hidden { display: none; }
+
+    .overlay-heading {
+      font-size: 34px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+    }
+
+    .overlay-stat {
+      font-size: 16px;
+      font-weight: 600;
+      color: #90caf9;
+    }
+
+    .overlay-stat.highlight {
+      font-size: 14px;
+      color: #ffd54f;
+    }
+
+    /* ── Feedback float label ── */
+    .feedback-label {
+      position: absolute;
+      font-size: 20px;
+      font-weight: 800;
+      pointer-events: none;
+      z-index: 50;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.28);
+      animation: floatUp 0.75s ease-out forwards;
+    }
+
+    @keyframes floatUp {
+      0%   { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(-55px) scale(1.25); }
+    }
+
+    /* ── Speed up flash ── */
+    @keyframes speedFlash {
+      0%, 100% { filter: brightness(1); }
+      40%       { filter: brightness(1.18); }
+    }
+    .flash-speed { animation: speedFlash 0.45s ease; }
+
+    /* ── Basket glow on drop ── */
+    @keyframes basketGlow {
+      0%, 100% { filter: drop-shadow(0 4px 8px rgba(80,40,0,0.25)); }
+      50%       { filter: drop-shadow(0 0 18px rgba(76,175,80,0.85)); }
+    }
+    .basket-correct { animation: basketGlow 0.4s ease; }
+
+    @keyframes basketGlowRed {
+      0%, 100% { filter: drop-shadow(0 4px 8px rgba(80,40,0,0.25)); }
+      50%       { filter: drop-shadow(0 0 18px rgba(229,57,53,0.85)); }
+    }
+    .basket-wrong { animation: basketGlowRed 0.4s ease; }
